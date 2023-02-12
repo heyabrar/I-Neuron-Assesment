@@ -19,8 +19,8 @@ export default function UserTable({ data, DeleteUser}) {
                             <td>{elem.lastName}</td>
                             <td>{elem.age}</td>
                             <td>{elem.phoneNumber}</td>
-                            <td>EDIT</td>
-                            <td onClick={( ) => DeleteUser(elem._id)}>DELETE</td>
+                            <td style={{cursor:'pointer'}}>EDIT</td>
+                            <td onClick={( ) => DeleteUser(elem._id)} style={{cursor :'pointer'}}>DELETE</td>
                         </tr>
                     })}
                 </tbody>

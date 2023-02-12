@@ -1,9 +1,9 @@
-import { useToast } from "@chakra-ui/react"
+import { Progress, useToast } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { FetchDeleteUser, FetchPostUser, FetchUsersData } from "../Fetch/Fetch"
+import { FetchDeleteUser, FetchEditUser, FetchPostUser, FetchUsersData } from "../Fetch/Fetch"
 import { GetUserFailure, GetUserRequest, GetUserSuccess } from "../Redux/Action"
-import AddUserModal from "./Modal"
+import AddUserModal from "./AddUserModal"
 import UserTable from "./UserTable"
 
 export default function AllUsers() {
@@ -42,7 +42,7 @@ export default function AllUsers() {
        handleAddUser(payload).then(( ) => handleGetUsers( ));
     }
 
-
+    
     const handleDeleteUser = (id)=>{
         return FetchDeleteUser(id).then((res)=>{
             Toast({title : `${res.data.message}`, status : 'success', position : 'top'})
@@ -64,6 +64,7 @@ export default function AllUsers() {
                     Add User
                 </button>
             </div>
+            {isLoading && <Progress size='sm' isIndeterminate colorScheme='red'/>}
             <UserTable data={UsersData} DeleteUser={DeleteUser}/>
             <AddUserModal isOpen={VisibleModal} setIsopen={setVisibleModal} AddUser={AddUser}/>
         </>
