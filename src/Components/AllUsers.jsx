@@ -1,12 +1,15 @@
+import { useToast } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { FetchPostUser, FetchUsersData } from "../Fetch/Fetch"
+import { FetchDeleteUser, FetchPostUser, FetchUsersData } from "../Fetch/Fetch"
 import { GetUserFailure, GetUserRequest, GetUserSuccess } from "../Redux/Action"
 import AddUserModal from "./Modal"
 import UserTable from "./UserTable"
 
 export default function AllUsers() {
     const [VisibleModal, setVisibleModal] = useState(false);
+    const Dispatch = useDispatch();
+    const Toast = useToast( );
     const { UsersData, isLoading, isError } = useSelector((s) => {
         return {
             UsersData: s.UsersData,
@@ -15,11 +18,10 @@ export default function AllUsers() {
         }
     })
 
-    const Dispatch = useDispatch();
-
     const handleOpenModal = ( ) =>{
         setVisibleModal(true)
     }
+
 
     const handleGetUsers = () => {
         Dispatch(GetUserRequest());
@@ -32,12 +34,23 @@ export default function AllUsers() {
 
     const handleAddUser = (payload) =>{
         return FetchPostUser(payload).then((res)=>{
-            console.log(res.data)
+           Toast({title : `${res.data.message}`, status : 'success', position : 'top'})
         })
     }
 
     const AddUser = (payload) =>{
        handleAddUser(payload).then(( ) => handleGetUsers( ));
+    }
+
+
+    const handleDeleteUser = (id)=>{
+        return FetchDeleteUser(id).then((res)=>{
+            Toast({title : `${res.data.message}`, status : 'success', position : 'top'})
+        })
+    }
+
+    const DeleteUser = (id) =>{
+        handleDeleteUser(id).then(( ) => handleGetUsers( ));
     }
 
     useEffect(() => {
@@ -51,7 +64,7 @@ export default function AllUsers() {
                     Add User
                 </button>
             </div>
-            <UserTable data={UsersData} />
+            <UserTable data={UsersData} DeleteUser={DeleteUser}/>
             <AddUserModal isOpen={VisibleModal} setIsopen={setVisibleModal} AddUser={AddUser}/>
         </>
     )

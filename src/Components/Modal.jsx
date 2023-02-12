@@ -15,7 +15,7 @@ export default function AddUserModal({ isOpen, setIsopen,AddUser}) {
     const handleAdd = (FName,LName,age,phone) =>{
         if(!FName || !LName || !age || !phone)
         {
-            Toast({title : 'Enter the required Data'})
+            Toast({title : 'Enter the required User Info', status : 'error', position : 'top'})
         }
 
         else
@@ -26,7 +26,12 @@ export default function AddUserModal({ isOpen, setIsopen,AddUser}) {
                 age,
                 phoneNumber : phone
             }
-            AddUser(payload)
+            setAge('');
+            setFName('');
+            setLName('');
+            setPhone('');
+            AddUser(payload);
+            setIsopen(false)
         }
     }
 

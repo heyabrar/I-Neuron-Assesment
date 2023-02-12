@@ -1,4 +1,4 @@
-export default function UserTable({ data }) {
+export default function UserTable({ data, DeleteUser}) {
     return (
         <>
             <table>
@@ -20,7 +20,7 @@ export default function UserTable({ data }) {
                             <td>{elem.age}</td>
                             <td>{elem.phoneNumber}</td>
                             <td>EDIT</td>
-                            <td>DELETE</td>
+                            <td onClick={( ) => DeleteUser(elem._id)}>DELETE</td>
                         </tr>
                     })}
                 </tbody>
