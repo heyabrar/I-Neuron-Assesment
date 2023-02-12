@@ -4,8 +4,8 @@ export const FetchUsersData = ( ) =>{
     return axios.get(`https://blue-journalist-bbrpv.ineuron.app:4000/users`)
 }
 
-export const FetchPostUser = ( ) =>{
-    return axios.post(`https://blue-journalist-bbrpv.ineuron.app:4000/user/create`)
+export const FetchPostUser = (payload) =>{
+    return axios.post(`https://blue-journalist-bbrpv.ineuron.app:4000/user/create`,payload)
 }
 
 //GET --> https://blue-journalist-bbrpv.ineuron.app:4000/users

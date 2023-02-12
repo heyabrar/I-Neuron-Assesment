@@ -1,5 +1,4 @@
 export default function UserTable({ data }) {
-    console.log(data, 'data')
     return (
         <>
             <table>
@@ -14,9 +13,8 @@ export default function UserTable({ data }) {
                     </tr>
                 </thead>
                 <tbody id="body">
-
                     {data.map((elem) => {
-                        return <tr>
+                        return <tr key={elem._id}>
                             <td>{elem.firstName}</td>
                             <td>{elem.lastName}</td>
                             <td>{elem.age}</td>
