@@ -1,11 +1,10 @@
 import './App.css';
+import AllUsers from './Components/AllUsers';
 
 function App() {
   return (
     <div className="App">
-       <h1 className="text-2xl font-bold underline text-red-600">
-      Hello world!
-    </h1>
+      <AllUsers />
     </div>
   );
 }
