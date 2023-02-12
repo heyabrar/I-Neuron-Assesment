@@ -12,11 +12,6 @@ export const FetchDeleteUser = (id) =>{
     return axios.delete(`https://blue-journalist-bbrpv.ineuron.app:4000/user/${id}`)
 }
 
-export const FetchEditUser = (id,payload) =>{
+export const FetchEditUser = (payload,id) =>{
     return axios.patch(` https://blue-journalist-bbrpv.ineuron.app:4000/user/${id}`, payload)
 }
-
-//GET --> https://blue-journalist-bbrpv.ineuron.app:4000/users
-//POST --> https://blue-journalist-bbrpv.ineuron.app:4000/user/create
-//PATCH --> https://blue-journalist-bbrpv.ineuron.app:4000/user/:id
-//DELETE --> https://blue-journalist-bbrpv.ineuron.app:4000/user/:id

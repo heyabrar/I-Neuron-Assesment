@@ -35,7 +35,6 @@ export default function AddUserModal({ isOpen, setIsopen,AddUser}) {
         }
     }
 
-
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose} className='TotalModal' size="lg">

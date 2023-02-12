@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { FetchDeleteUser, FetchEditUser, FetchPostUser, FetchUsersData } from "../Fetch/Fetch"
 import { GetUserFailure, GetUserRequest, GetUserSuccess } from "../Redux/Action"
 import AddUserModal from "./AddUserModal"
+import EditModal from "./EditModal"
 import UserTable from "./UserTable"
 
 export default function AllUsers() {
     const [VisibleModal, setVisibleModal] = useState(false);
+    const [ID,setID] = useState('');
+    const [EditVisibleModal, setEditVisibleModal] = useState(false);
     const Dispatch = useDispatch();
     const Toast = useToast( );
     const { UsersData, isLoading, isError } = useSelector((s) => {
@@ -18,11 +21,13 @@ export default function AllUsers() {
         }
     })
 
+    //Opens modal for Add user
     const handleOpenModal = ( ) =>{
         setVisibleModal(true)
     }
 
 
+    //GetsAll users
     const handleGetUsers = () => {
         Dispatch(GetUserRequest());
         FetchUsersData().then((res) => {
@@ -32,26 +37,48 @@ export default function AllUsers() {
     }
 
 
+    //Add user function
     const handleAddUser = (payload) =>{
         return FetchPostUser(payload).then((res)=>{
            Toast({title : `${res.data.message}`, status : 'success', position : 'top'})
         })
+        .catch((err)=>console.log(err))
     }
 
     const AddUser = (payload) =>{
        handleAddUser(payload).then(( ) => handleGetUsers( ));
     }
 
-    
+
+    //Edit functions
+    const EditButton = (id) =>{
+        setID(id)
+        setEditVisibleModal(true);
+    }
+
+    const handleEditUser = (payload,id) => {
+        return FetchEditUser(payload,id).then((res)=>{
+            Toast({title : `${res.data.message}`, status : 'success', position : 'top'})
+        })
+        .catch((err)=>console.log(err))
+    }
+
+    const EditUserData = (payload,ID) =>{
+        handleEditUser(payload,ID).then(( ) => handleGetUsers( ));
+    }
+
+    //Delete functions
     const handleDeleteUser = (id)=>{
         return FetchDeleteUser(id).then((res)=>{
             Toast({title : `${res.data.message}`, status : 'success', position : 'top'})
         })
+        .catch((err)=> console.log(err))
     }
 
     const DeleteUser = (id) =>{
         handleDeleteUser(id).then(( ) => handleGetUsers( ));
     }
+
 
     useEffect(() => {
         handleGetUsers()
@@ -65,8 +92,10 @@ export default function AllUsers() {
                 </button>
             </div>
             {isLoading && <Progress size='sm' isIndeterminate colorScheme='red'/>}
-            <UserTable data={UsersData} DeleteUser={DeleteUser}/>
+            {isError && 'Oops Something went wrong'}
+            <UserTable data={UsersData} DeleteUser={DeleteUser} EditUserData={EditUserData} EditButton={EditButton}/>
             <AddUserModal isOpen={VisibleModal} setIsopen={setVisibleModal} AddUser={AddUser}/>
+            <EditModal isOpen={EditVisibleModal} setIsopen={setEditVisibleModal} EditUserData={EditUserData} ID={ID}/>
         </>
     )
 }
