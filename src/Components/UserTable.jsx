@@ -1,3 +1,6 @@
+import {AiFillEdit} from 'react-icons/ai'
+import {FiDelete} from 'react-icons/fi';
+
 export default function UserTable({ data, DeleteUser,EditButton}) {
     return (
         <>
@@ -19,8 +22,8 @@ export default function UserTable({ data, DeleteUser,EditButton}) {
                             <td>{elem.lastName}</td>
                             <td>{elem.age}</td>
                             <td>{elem.phoneNumber}</td>
-                            <td style={{cursor:'pointer'}} onClick={( ) =>EditButton(elem._id)}>EDIT</td>
-                            <td onClick={( ) => DeleteUser(elem._id)} style={{cursor :'pointer'}}>DELETE</td>
+                            <td style={{cursor:'pointer'}} onClick={( ) =>EditButton(elem._id)}><AiFillEdit/></td>
+                            <td onClick={( ) => DeleteUser(elem._id)} style={{cursor :'pointer'}}><FiDelete/></td>
                         </tr>
                     })}
                 </tbody>
